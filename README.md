@@ -6,6 +6,7 @@ Refer to: https://www.okta.com/free-trial/workforce-identity to create a free tr
 To run launch you need 2 ENV vars:
 
 TOKEN (Okta API Token)
+
 URLBASE (ex: 'https://YOURNAME.okta.com')
 (Make sure the Okta token is a user with Super admin privileges)
 
