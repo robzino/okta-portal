@@ -8,6 +8,7 @@ To run launch you need 2 ENV vars:
 TOKEN (Okta API Token)
 
 URLBASE (ex: 'https://YOURNAME.okta.com')
+
 (Make sure the Okta token is a user with Super admin privileges)
 
 To run the container: docker run -d -e TOKEN='5vZJod...' -e URLBASE='https://YOURNAME.okta.com' -v $(pwd)/config:/app/config -p 5000:5000 robzino/public_images:okta-portal.20b
