@@ -6,7 +6,7 @@ Refer to: https://www.okta.com/free-trial/workforce-identity to create a free tr
 When creating a new Okta app, select the "Client authentication" option and save off the client id and the client secret.
 Use the 2 PNG screenshot files for help.
 
-To run launch you need 2 ENV vars:
+To run launch you need 2 variables:
 
 TOKEN (Okta API Token)
 
@@ -14,6 +14,10 @@ URLBASE (ex: 'https://YOURNAME.okta.com')
 
 (Make sure the Okta token is a user with Super admin privileges)
 
-To run the container: docker run -d -e TOKEN='5vZJod...' -e URLBASE='https://YOURNAME.okta.com' -v $(pwd)/config:/app/config -p 5000:5000 robzino/public_images:okta-portal.20b
+To run the container: 
+
+1) In a local directory make a new "config" directory, and copy the "client_secrets.json" to it
+2) Edit the file "client_secrets.json" and add the Okta secret and URL information
+3) docker run -d -e TOKEN='5vZJod...' -e URLBASE='https://YOURNAME.okta.com' -v $(pwd)/config:/app/config -p 5000:5000 robzino/public_images:okta-portal.20b
 
 By default it will run on port 5000.
