@@ -18,7 +18,7 @@ To run the container:
 
 1) In a local directory make a new "config" directory, and copy the "client_secrets.json" to it
 2) Edit the file "client_secrets.json" and add the Okta secret and URL information
-3) docker run -d -e TOKEN='5vZJod...' -e URLBASE='https://YOURNAME.okta.com' -v $(pwd)/config:/app/config -p 5000:5000 robzino/public_images:okta-portal.20b
-4) you can now add users to this application.  Refer to: https://help.okta.com/en-us/Content/Topics/users-groups-profiles/usgp-assign-apps.htm
+3) Run: docker run -d -e TOKEN='5vZJod...' -e URLBASE='https://YOURNAME.okta.com' -v $(pwd)/config:/app/config -p 5000:5000 robzino/public_images:okta-portal.20b
+4) You can now add users to this application.  Refer to: https://help.okta.com/en-us/Content/Topics/users-groups-profiles/usgp-assign-apps.htm
    
 By default it will run on port 5000.
