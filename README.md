@@ -12,7 +12,7 @@ TOKEN (Okta API Token) and URLBASE (ex: 'https://YOURNAME.okta.com')
 Steps:
 
 1) After you log into your Okta trial account, create a new OIDC - OpenID Connect application
-2) When creating a new Okta app, select the "Client authentication" option and save off the client id and the client secret. Use the 2 PNG screenshot files for help.
+2) When creating a new Okta app, select the "Client authentication" option and save off the client id and the client secret. Use the "Okta App Settings.png" screenshot file for help.
 3) Edit the file "client_secrets.json" and add the Okta secret and URL information
 4) Edit the "go" script and add your TOKEN and URLBASE variables
 5) Run the "go" script
