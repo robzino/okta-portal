@@ -1,7 +1,10 @@
-
+#
 # http://localhost:5000/
 #
 
+# update these 2 lines below
+URLBASE='https://FOO.okta.com'
+TOKEN='ABC...'
 
 NAME=okta-portal
 id=`docker ps | grep "$NAME" | awk {'print $1'}`
