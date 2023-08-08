@@ -1,0 +1,33 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+
+<div class="card-body">
+
+{% if msg: %}
+	<div class="alert alert-info"><strong>{{ msg }}</strong></div>
+{% endif %}
+
+<h4>You are logged into the Okta Support Portal </h4>
+<BR>
+<body onload="document.main.pattern.focus();">
+	<form name="main" role="form" action="/user/search/submit" method="post" >
+
+		<div class="form-group">
+			<label>Search for a Name or E-Mail address that starts with:</label>
+			<input class="form-control" name="pattern" value="" placeholder="">
+		</div>
+		<p>
+		<input type="checkbox" id="disabled_cb" name="disabled_cb" value="on">
+		 &nbsp;Show de-activated users
+		</p>
+		<BR>
+		<button type="submit" class="btn btn-primary">Submit</button>
+
+	</form>
+
+
+{% endblock %}

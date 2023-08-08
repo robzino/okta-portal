@@ -1,0 +1,56 @@
+
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+	<a href="/users/{{ user_data['id'] }}/view" class="btn btn-primary btn-icon-split btn-sm">
+		<span class="text">Back to profile</span>
+	</a>
+	<BR><BR><h5 class="m-0 font-weight-bold text-primary">Edit a User</h5>
+</div>
+<div class="card-body">
+<body onload="document.main.fname.focus();">
+
+    <form name="main" role="form" action="/users/{{ user_data['id'] }}/save" method="post" >
+
+            {% if result: %}
+             <BR><div class="alert alert-info">
+          	<strong>{{ result }}</strong>
+     				</div>
+            {% endif %}
+
+						<div class="form-group">
+										<label>E-Mail address:</label>
+										<input class="form-control" name="email" value="{{ user_data['profile']['email'] }}" placeholder="" readonly>
+						</div>
+
+            <div class="form-group">
+                    <label>First name:</label>
+                    <input class="form-control" name="fname" value="{{ user_data['profile']['firstName'] }}" placeholder="">
+            </div>
+
+						<div class="form-group">
+										<label>Last name:</label>
+										<input class="form-control" name="lname" value="{{ user_data['profile']['lastName'] }}" placeholder="">
+						</div>
+
+						<div class="form-group">
+										<label>Mobile:</label>
+										<input class="form-control" name="mobile" value="{{ user_data['profile']['mobilePhone'] }} " placeholder="">
+						</div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+
+    </form>
+
+
+</div>
+</div>
+
+<!-- /.well -->
+
+
+{% endblock %}

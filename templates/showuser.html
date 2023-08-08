@@ -1,0 +1,117 @@
+
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+<div class="card shadow mb-4">
+
+<div class="card-header py-3">
+		<a href="/" class="btn btn-secondary btn-icon-split btn-sm">
+			<span class="text">Home</span>
+		</a>	&nbsp;	&nbsp;
+		<a href="/users/search/{{ pattern }}" class="btn btn-primary btn-icon-split btn-sm">
+			<span class="text">Back to search</span>
+		</a>
+		<BR><BR><h5 class="m-0 font-weight-bold text-primary">{{ user_data['profile']['email'] }}  </h5>
+
+</div>
+<div class="card-body">
+
+	{% if param == 'save' %}
+		<div class="alert alert-info"><strong>User information was saved.</strong></div>
+	{% endif %}
+	{% if param == 'reset' %}
+		<div class="alert alert-info"><strong>User was E-Mailed to reset their password.</strong></div>
+	{% endif %}
+	{% if param == 'activate' %}
+		<div class="alert alert-info"><strong>User was activated.</strong></div>
+	{% endif %}
+	{% if param == 'deactivate' %}
+		<div class="alert alert-info"><strong>User was de-activated.</strong></div>
+	{% endif %}
+	{% if param == 'unlock' %}
+		<div class="alert alert-info"><strong>User was unlocked.</strong></div>
+	{% endif %}
+	{% if param == 'factordel' %}
+		<div class="alert alert-info"><strong>Auth factor was deleted.</strong></div>
+	{% endif %}
+
+  {% if admin_bool == 'n': %}
+		<p>Actions:
+			&nbsp; <a href="/users/{{ user_data['id'] }}/edit" class="btn btn-primary btn-icon-split btn-sm">
+				<span class="text">Edit</span>
+			</a>
+
+			{% if user_data['status'] == 'ACTIVE' or user_data['status'] == 'PASSWORD_EXPIRED': %}
+			&nbsp; <a href="/users/{{ user_data['id'] }}/deactivate" class="btn btn-info btn-icon-split btn-sm">
+				<span class="text">De-Activate</span>
+			</a>
+			{% endif %}
+
+			{% if user_data['status'] == 'LOCKED_OUT': %}
+			&nbsp; <a href="/users/{{ user_data['id'] }}/unlock" class="btn btn-info btn-icon-split btn-sm">
+				<span class="text">Unlock</span>
+			</a>
+			{% endif %}
+
+			{% if user_data['status'] == 'STAGED' or user_data['status'] == 'PROVISIONED': %}
+			&nbsp; <a href="/users/{{ user_data['id'] }}/reset" class="btn btn-primary btn-icon-split btn-sm">
+				<span class="text">Reset Password</span>
+			</a>
+			{% endif %}
+
+			{% if user_data['status'] == 'DEPROVISIONED': %}
+			&nbsp; <a href="/users/{{ user_data['id'] }}/activate" class="btn btn-primary btn-icon-split btn-sm">
+				<span class="text">Activate</span>
+			</a>
+			&nbsp; <a href="/users/{{ user_data['id'] }}/delete" class="btn btn-danger btn-icon-split btn-sm">
+				<span class="text">Delete</span>
+			</a>
+			{% endif %}
+
+		 </p><BR>
+
+	{% else %}
+		<div class="alert alert-info"><strong>This user has Administrator privileges.</strong></div>
+	{% endif %}
+
+	{% if factor_data and user_data['status'] == 'ACTIVE': %}
+			<BR>Auth Factors:
+			{% for f_data in factor_data %}
+				<BR> &nbsp;&nbsp; - {{ f_data['provider'][0]|upper }}{{ f_data['provider'][1:]|lower }} : {{ f_data['status'][0]|upper }}{{ f_data['status'][1:]|lower }}
+					{% if admin_bool == 'n': %}
+						  &nbsp; <a href="/delfactor/{{ user_data['id'] }}/{{ f_data['id'] }}" class="btn btn-danger btn-icon-split btn-sm">
+							<span class="text">Delete</span></a>
+					{% endif %}
+			{% endfor %}
+			<BR> 
+	{% endif %}
+
+  <BR>
+	<p>Name: {{ user_data['profile']['firstName'] }}  {{ user_data['profile']['lastName'] }} </p>
+	<p>Status: {{ user_data['status'][0]|upper}}{{user_data['status'][1:]|lower }}
+		{% if user_data['status'] == 'PROVISIONED': %}
+		  - User was E-Mailed to set password.
+		{% endif %}
+  </p>
+
+	<p>Mobile: {{ user_data['profile']['mobilePhone'] }}  </p>
+	<p>Activated:
+		{{ user_data['activated'] | replace("T", " ") | replace(".000Z", "") }}
+	</p>
+	<p>Last login:
+  	{{ user_data['lastLogin'] | replace("T", " ") | replace(".000Z", "") }}
+	</p>
+	<p>Password Changed:
+		{{ user_data['passwordChanged'] | replace("T", " ") | replace(".000Z", "") }}
+	</p>
+
+
+</div>
+</div>
+
+<!-- /.well -->
+
+
+{% endblock %}
