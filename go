@@ -3,7 +3,7 @@
 #
 
 # update these 2 lines below
-URLBASE='https://FOO.okta.com'
+URLBASE='https://YOURNAME.okta.com'
 TOKEN='ABC...'
 
 NAME=okta-portal
