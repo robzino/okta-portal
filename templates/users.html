@@ -1,0 +1,51 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+<style>
+h5 {
+    display:inline
+}
+</style>
+
+
+<!-- DataTales Example -->
+	<div class="card shadow mb-4">
+		<div class="card-header py-3">
+	     <h5 class="m-0 font-weight-bold text-primary">Users</h5>
+     </div>
+
+	<div class="card-body">
+  {% if user_data: %}
+			<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<th width="30%"> E-Mail Address </th>
+						 			<th width="50%"> Name </th>
+						 			<th width="20%"> Status </th>
+						 	 </tr>
+
+						 </thead>
+
+					 	<tbody>
+					 	 {% for data in user_data %}
+					 			<tr>
+					 				<td><a href="/users/{{ data['id'] }}/view">{{ data['profile']['email'] }}</a>  </td>
+									<td>{{ data['profile']['firstName'] }}  {{ data['profile']['lastName'] }} </td>
+									<td> {{ data['status'][0]|upper}}{{data['status'][1:]|lower }}  </td>
+					 			</tr>
+					 	 {% endfor %}
+</tbody></table>
+{% else %}
+	<BR><div class="alert alert-info">
+          <strong>No users found.</strong>
+    </div>
+{% endif %}
+
+</div>
+</div>
+{% endblock %}
