@@ -60,6 +60,7 @@ def panel():
 	if oidc.user_loggedin:
 		if session['user_loggedin'] == "":
 			functions.log_msg(oidc, "User Logged in")
+			session['okta_name'] = oidc.user_getfield('name')
 		session['user_loggedin'] = "yes"
 		return render_template('panel.html')
 	else:
