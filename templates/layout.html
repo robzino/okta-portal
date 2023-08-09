@@ -27,6 +27,21 @@
 
 </head>
 
+<style>
+.container {
+    position: relative;
+}
+
+.inlineLeft, .inlineRight {
+    position: absolute;
+    display: inline;
+}
+
+.inlineRight {
+    right: 0;
+}
+</style>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -90,7 +105,13 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h6>Okta home: {{ config['OKTA_URLBASE'] }} </h6>
+                    <div class="contailner">
+                      {% if session['user_loggedin'] == "yes": %}
+                        <div class="inlineLeft"><h6>Welcome {{ session['okta_name'] }}</h6></div>
+                      {% endif %}
+                        <div class="inlineRight"><h6>Okta home: {{ config['OKTA_URLBASE'] }} &nbsp;&nbsp;&nbsp;</h6></div>
+                    </div>
+
 
 
                 </nav>
