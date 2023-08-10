@@ -20,7 +20,7 @@ url_for = functools.partial(url_for, _scheme='https')
 
 app = Flask(__name__)
 #sslify = SSLify(app)
-app.config['VERSION'] = '2.0b'
+app.config['VERSION'] = '2.0c'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = 'asjhd4895647664745464138537262ds00cd'
 
@@ -76,6 +76,7 @@ def show_users(pattern):
 	if pattern == "disabled":
 		user_data = get_disabled_users()
 		session['pattern'] = "disabled"
+		functions.log_msg(oidc, "Showing disabled users")
 	else:
 		user_data = get_users(pattern)
 		session['pattern'] = pattern
@@ -258,8 +259,8 @@ def call_okta(action, url, data=""):
 		parsed_json = json.loads(result.text)
 		return(parsed_json)
 	except requests.exceptions.HTTPError as errh:
-		parsed_json = json.loads(result.text)
-		functions.log_msg(oidc, "call_okta error: " + parsed_json['errorSummary'])
+		#parsed_json = json.loads(result.text)
+		#functions.log_msg(oidc, "call_okta error: " + parsed_json['errorSummary'])
 		return('err')
 
 
