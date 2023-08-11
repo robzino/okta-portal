@@ -33,6 +33,11 @@ def check_admin_role(role_data):
 	return admin_bool
 
 def log_msg(oidc, msg):
-	email = oidc.user_getfield('email')
-	ip=request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+	try:
+		email = oidc.user_getfield('email')
+		ip=request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+	except:
+		email=''
+		ip=''
+
 	app.logger.info(email + " : " + ip + " : " + msg)
