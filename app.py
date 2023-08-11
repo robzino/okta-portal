@@ -39,13 +39,20 @@ gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers
 app.logger.setLevel(gunicorn_logger.level)
 
+OKTA_TOKEN=''
+OKTA_URLBASE=''
 try:
 	OKTA_TOKEN = os.environ.get('TOKEN')
 	OKTA_URLBASE = os.environ.get("URLBASE")
 	app.config['OKTA_URLBASE'] = OKTA_URLBASE
 except:
-	functions.log_msg(oidc, 'ENV vars are not set!')
+	functions.log_msg('oidc', 'ENV vars are not set!')
 
+if not OKTA_TOKEN:
+	functions.log_msg('oidc', 'ENV var OKTA_TOKEN not set!')
+
+if not OKTA_URLBASE:
+	functions.log_msg('oidc', 'ENV var OKTA_URLBASE not set!')
 
 # main routes
 @app.route('/')
