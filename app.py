@@ -89,6 +89,9 @@ def show_users(pattern):
 		session['pattern'] = pattern
 		functions.log_msg(oidc, "Showing users for: " + pattern)
 
+	if user_data == 'err':
+		return render_template('panel.html', msg="Permission error. Please contact Okta admin.")
+
 	return render_template('users.html',  user_data=user_data)
 
 
@@ -128,10 +131,14 @@ def useractions(userid, action):
 		factor_data = get_user_factors(userid)
 		role_data = get_user_roles(userid)
 		if role_data != 'err':
-			admin_bool=functions.check_admin_role(role_data)
+			try:
+				admin_bool=functions.check_admin_role(role_data)
+			except:
+				functions.log_msg(oidc, "check_admin_role error. Make sure API user is Super admin. ")
+
 			return render_template('showuser.html', factor_data=factor_data, pattern=session['pattern'], admin_bool=admin_bool, param=param, user_data=user_data)
 		else:
-			return render_template('panel.html', msg="Role API call failed.")
+			return render_template('panel.html', msg="Permission error. Please contact Okta admin.")
 
 	if action == 'edit':
 		user_data = get_user(userid)
@@ -266,8 +273,8 @@ def call_okta(action, url, data=""):
 		parsed_json = json.loads(result.text)
 		return(parsed_json)
 	except requests.exceptions.HTTPError as errh:
-		#parsed_json = json.loads(result.text)
-		#functions.log_msg(oidc, "call_okta error: " + parsed_json['errorSummary'])
+		parsed_json = json.loads(result.text)
+		functions.log_msg(oidc, "Permission error. Make sure API user is Super admin.")
 		return('err')
 
 
