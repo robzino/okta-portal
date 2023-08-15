@@ -20,7 +20,7 @@ url_for = functools.partial(url_for, _scheme='https')
 
 app = Flask(__name__)
 #sslify = SSLify(app)
-app.config['VERSION'] = '2.0c'
+app.config['VERSION'] = '2.0d'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = 'asjhd4895647664745464138537262ds00cd'
 
@@ -150,11 +150,17 @@ def useractions(userid, action):
 
 	if action == 'deactivate':
 		update_user_status(userid, 'deactivate')
-		update_user_status(userid, 'reset_factors')
+		res = update_user_status(userid, 'reset_factors')
+		if res == 'err':
+			return redirect('/users/' + userid + '/view?param=error')  # go back
+
 		return redirect('/users/' + userid + '/view?param=deactivate')  # go back
 
 	if action == 'activate':
-		update_user_status(userid, 'activate')
+		res = update_user_status(userid, 'activate')
+		if res == 'err':
+			return redirect('/users/' + userid + '/view?param=error')  # go back
+			
 		return redirect('/users/' + userid + '/view?param=activate')  # go back
 
 	if action == 'delete':
@@ -179,6 +185,8 @@ def useractions(userid, action):
 			mobile = request.form['mobile']
 			if fname and lname and mobile:
 				res=update_user(userid, fname, lname, mobile)
+				if res == 'err':
+					return redirect('/users/' + userid + '/view?param=error')  # go back
 
 		return redirect('/users/' + userid + '/view?param=save')  # go back
 
@@ -274,7 +282,7 @@ def call_okta(action, url, data=""):
 		return(parsed_json)
 	except requests.exceptions.HTTPError as errh:
 		parsed_json = json.loads(result.text)
-		functions.log_msg(oidc, "Permission error. Make sure API user is Super admin.")
+		functions.log_msg(oidc, "Okta error: " + parsed_json['errorSummary'])
 		return('err')
 
 

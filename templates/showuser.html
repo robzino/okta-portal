@@ -36,6 +36,9 @@
 	{% if param == 'factordel' %}
 		<div class="alert alert-info"><strong>Auth factor was deleted.</strong></div>
 	{% endif %}
+	{% if param == 'error' %}
+		<div class="alert alert-danger"><strong>Saving user information failed.</strong></div>
+	{% endif %}
 
   {% if admin_bool == 'n': %}
 		<p>Actions:
@@ -85,7 +88,7 @@
 							<span class="text">Delete</span></a>
 					{% endif %}
 			{% endfor %}
-			<BR> 
+			<BR>
 	{% endif %}
 
   <BR>
