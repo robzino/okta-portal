@@ -1,10 +1,8 @@
-FROM python:3-alpine
-
+FROM python:3.7-alpine
 
 COPY requirements.txt ./
 RUN pip3 install -r requirements.txt
 RUN pip3 install requests flask-session Flask
-RUN pip3 install Flask-SSLify
 RUN pip3 install --force-reinstall itsdangerous==2.0.1
 
 # Create app directory
@@ -25,6 +23,5 @@ ENTRYPOINT ["python3"]
 #  log levels: 'debug' 'info' 'warning' 'error' 'critical'
 
 CMD ["/usr/local/bin/gunicorn", "app:app", "-w 2", "--log-level=info", "-b", "0.0.0.0:5000"]
-#CMD ["/usr/local/bin/gunicorn", "app:app", "-w 2", "--certfile", "cert.pem", "--keyfile", "cert.key", "--log-level=info", "-b", "0.0.0.0:443"]
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
