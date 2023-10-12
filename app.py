@@ -7,19 +7,13 @@ from os import environ
 import functions
 import json,os,sys, random, string, re, logging, time, datetime, requests
 from flask import Flask
-from flask_sslify import SSLify
 from flask_oidc import OpenIDConnect
 from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 from okta import UsersClient
 from oauth2client.client import OAuth2Credentials
 
-# add 2 lines to turn on SSL on
-import functools
-url_for = functools.partial(url_for, _scheme='https')
-
 
 app = Flask(__name__)
-#sslify = SSLify(app)
 app.config['VERSION'] = '2.0d'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = 'asjhd4895647664745464138537262ds00cd'
@@ -32,8 +26,6 @@ oidc = OpenIDConnect(app)
 
 sess = Session()
 
-#SSL
-#app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 gunicorn_logger = logging.getLogger('gunicorn.error')
 app.logger.handlers = gunicorn_logger.handlers
@@ -90,7 +82,7 @@ def show_users(pattern):
 		functions.log_msg(oidc, "Showing users for: " + pattern)
 
 	if user_data == 'err':
-		return render_template('panel.html', msg="Permission error. Please contact Okta admin.")
+		return render_template('panel.html', msg="Permission error. Please contact your Okta admin.")
 
 	return render_template('users.html',  user_data=user_data)
 
@@ -138,7 +130,7 @@ def useractions(userid, action):
 
 			return render_template('showuser.html', factor_data=factor_data, pattern=session['pattern'], admin_bool=admin_bool, param=param, user_data=user_data)
 		else:
-			return render_template('panel.html', msg="Permission error. Please contact Okta admin.")
+			return render_template('panel.html', msg="Permission error. Please contact your Okta admin.")
 
 	if action == 'edit':
 		user_data = get_user(userid)
@@ -160,7 +152,7 @@ def useractions(userid, action):
 		res = update_user_status(userid, 'activate')
 		if res == 'err':
 			return redirect('/users/' + userid + '/view?param=error')  # go back
-			
+
 		return redirect('/users/' + userid + '/view?param=activate')  # go back
 
 	if action == 'delete':
