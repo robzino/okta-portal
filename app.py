@@ -14,7 +14,7 @@ from oauth2client.client import OAuth2Credentials
 
 
 app = Flask(__name__)
-app.config['VERSION'] = '2.0d'
+app.config['VERSION'] = '2.0f'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = 'asjhd4895647664745464138537262ds00cd'
 
@@ -51,7 +51,9 @@ if not OKTA_URLBASE:
 def home():
 	if not oidc.user_loggedin:
 		session['user_loggedin'] = ""
-	return render_template('home.html')
+		return render_template('home.html')
+	else:
+		return render_template('panel.html')
 
 @app.route('/panel')
 @oidc.require_login
