@@ -1,4 +1,4 @@
-# okta-portal 2.0d
+# okta-portal 2.0f
 This is a basic Flask app that allows support engineers to manage Okta users without using the Okta console where they may have too many permissions for other areas. It uses an Okta OpenID connect for authentication.
 
 Refer to: https://www.okta.com/free-trial/workforce-identity to create a free trial account. 
